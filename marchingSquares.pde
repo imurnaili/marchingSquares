@@ -3,7 +3,7 @@ int yCount = 50;
 
 void setup(){
   frameRate(60);
-  size(400,400);
+  size(800,640);
   Ball.init(width, height);
 }
 
@@ -29,7 +29,7 @@ void draw(){
   }
   popStyle();
   
-  beginShape();
+  noStroke();
   int squareindex;
   float isoval = 1.0;
   for (int y = 0; y < yCount-1; y++) {
@@ -83,5 +83,4 @@ void draw(){
       }
     }
   }
-  endShape();
 }
