@@ -6,11 +6,11 @@ static class Ball{
   static int w;
   static int h;
   static int c;
-  static boolean booty = true;
+  static boolean booty;
   
   static Ball[] balls;
   static void init(int wi, int he, int count, boolean gravity){
-    booty = gravity
+    booty = gravity;
     c = count;
     w = wi;
     h = he;
@@ -24,7 +24,7 @@ static class Ball{
       pos.x += w/2;
       pos.y += h/2;
 
-      balls[i] = new Ball(pos, radius, PVector.random2D().setMag(0.5));
+      balls[i] = new Ball(pos, radius, PVector.random2D().setMag(w/800));
     }
   }
   

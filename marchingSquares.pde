@@ -24,7 +24,7 @@ float getCenteredYCoord(int y) {
 }
 
 void draw(){
-  {
+  if(gravity){
     PVector center = Ball.getCenter();
     centerX = center.x;
     centerY = center.y;
