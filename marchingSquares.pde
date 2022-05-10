@@ -1,8 +1,8 @@
-int xCount = 50;
-int yCount = 50;
+int xCount = 200;
+int yCount = 200;
 
 void setup(){
-  size(400,400);
+  size(800,800);
   Ball.init(width, height, 5);
 }
 
@@ -28,7 +28,8 @@ void draw(){
   }
   popStyle();
   
-  noStroke();
+  stroke(#FFFFFF);
+  strokeWeight(1);
   int squareindex;
   float isoval = 1.0;
   for (int y = 0; y < yCount-1; y++) {
