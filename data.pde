@@ -13,7 +13,7 @@ static class Ball{
     h = he;
     balls = new Ball[3];
     for(int i = 0; i < 3; i++){
-      balls[i] = new Ball(new PVector(w/2, h/2), lerp(w/20, w/10, i/3), PVector.random2D().setMag(5), #330033);
+      balls[i] = new Ball(new PVector(w/2, h/2), lerp(w/20, w/10, i/3), PVector.random2D().setMag(0.5), #330033);
     }
   }
   
@@ -54,6 +54,11 @@ static class Ball{
 
 
 float getValue(int x, int y) {
-  PVector p = new PVector(x, y).sub(new PVector(width/ 2, height /2));
-  return p.mag();
+  float value = 0;
+  for (Ball ball : Ball.balls){
+    // r^2/(x−xi)^2+(y−yi)^2
+    value += (pow(ball.r, 2))/
+                    (pow(x - ball.pos.x, 2) + pow(y - ball.pos.y, 2));
+  }
+  return value;
 }
