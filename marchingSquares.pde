@@ -9,10 +9,17 @@ void setup(){
 }
 
 float getXCoord(int x) {
-  return x * width / xCount + centerX;
+  return x * width / xCount;
 }
 float getYCoord(int y) {
-  return height-(y * height / yCount) - centerY;
+  return height-(y * height / yCount);
+}
+
+float getCenteredXCoord(int x) {
+  return getXCoord(x) + centerX;
+}
+float getCenteredYCoord(int y) {
+  return getYCoord(y) - centerY;
 }
 
 void draw(){
@@ -27,23 +34,24 @@ void draw(){
   strokeWeight(3);
   for(int x = 0; x < xCount; x++) {
     for(int y = 0; y < yCount; y++) {
-      if(getValue(get(x),y * height / yCount) > 1) stroke(0, 0, 255);
+      if(getValue(getCenteredXCoord(x),getCenteredYCoord(y)) > 1) stroke(0, 0, 255);
       else stroke(255, 0, 0);
-      point(x * width / xCount, y * height / yCount);
+      point(getXCoord(x), getYCoord(y));
     }
   }
   popStyle();
   
-  noStroke();
+  stroke(#FFFFFF);
+  strokeWeight(1);
   int squareindex;
   float isoval = 1.0;
   for (int y = 0; y < yCount-1; y++) {
     for (int x = 0; x < xCount-1; x++) {
       squareindex = 0;
-      if (getValue(getXCoord(x), getYCoord(y))   >= isoval) squareindex |= 1;
-      if (getValue(getXCoord(x+1), getYCoord(y))   >= isoval) squareindex |= 2;
-      if (getValue(getXCoord(x+1), getYCoord(y+1)) >= isoval) squareindex |= 4;
-      if (getValue(getXCoord(x), getYCoord(y+1)) >= isoval) squareindex |= 8;
+      if (getValue(getCenteredXCoord(x), getCenteredYCoord(y))   >= isoval) squareindex |= 1;
+      if (getValue(getCenteredXCoord(x+1), getCenteredYCoord(y))   >= isoval) squareindex |= 2;
+      if (getValue(getCenteredXCoord(x+1), getCenteredYCoord(y+1)) >= isoval) squareindex |= 4;
+      if (getValue(getCenteredXCoord(x), getCenteredYCoord(y+1)) >= isoval) squareindex |= 8;
       //if (squareindex > 0) print(squareindex + ":");
       int[] vals = triTable[squareindex];
       for (int i = 0; i < vals.length; i += 3) {
