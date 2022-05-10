@@ -9,7 +9,8 @@ static class Ball{
   static boolean booty = true;
   
   static Ball[] balls;
-  static void init(int wi, int he, int count){
+  static void init(int wi, int he, int count, boolean gravity){
+    booty = gravity
     c = count;
     w = wi;
     h = he;

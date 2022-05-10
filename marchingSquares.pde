@@ -2,10 +2,11 @@ int xCount = 100;
 int yCount = 100;
 float centerX = 0;
 float centerY = 0;
+boolean gravity = false;
 
 void setup(){
   size(800,800);
-  Ball.init(width, height, 3);
+  Ball.init(width, height, 3, gravity);
 }
 
 float getXCoord(int x) {
