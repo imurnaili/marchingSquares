@@ -3,7 +3,7 @@ int yCount = 100;
 
 void setup(){
   size(400,400);
-  Ball.init(width, height);
+  Ball.init(width, height, 5);
 }
 
 void draw(){

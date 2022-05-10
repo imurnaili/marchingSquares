@@ -2,18 +2,26 @@ static class Ball{
   PVector pos;
   PVector v;
   float r;
-  color c;
   
   static int w;
   static int h;
+  static boolean booty = false;
   
   static Ball[] balls;
-  static void init(int wi, int he){
+  static void init(int wi, int he, int count){
     w = wi;
     h = he;
-    balls = new Ball[3];
-    for(int i = 0; i < 3; i++){
-      balls[i] = new Ball(new PVector(w/2, h/2), lerp(w/20, w/10, i/3), PVector.random2D().setMag(0.5), #330033);
+    balls = new Ball[count];
+    for(int i = 0; i < count; i++){
+      float radius = map(i, 0 , count, 20, w /5);
+      PVector pos = PVector.random2D();
+      
+      pos.x *= w/2 - radius;
+      pos.y *= h/2 - radius;
+      pos.x += w/2;
+      pos.y += h/2;
+
+      balls[i] = new Ball(pos, radius, PVector.random2D().setMag(0.5));
     }
   }
   
@@ -23,30 +31,49 @@ static class Ball{
    }
   }
   
-  Ball(PVector pos, float radius, PVector v, color c){
+  Ball(PVector pos, float radius, PVector v){
     this.pos = pos.copy();
     r = radius;
     this.v = v.copy();
-    this.c = c;
+  }
+  
+  float getMass(){
+    return PI * pow(r, 2);
   }
   
   void update(){
+    PVector a = new PVector(0,0);
+    //n booty sim
+    if (booty){
+      for(Ball b: Ball.balls){
+        float magnitude = 0.2*b.getMass()/pow(r,2);
+
+        PVector partialA = b.pos.copy().sub(pos).setMag(magnitude);
+        a.add(partialA);
+      }
+    }    
+
+    v.add(a);
     pos.add(v);
-    if(pos.x < r) {
-      pos.x = r;
-      v.x*= -1;
-    }
-    if(pos.y < r) {
-      pos.y = r;
-      v.y*= -1;
-    }
-    if(pos.x > w - r) {
-      pos.x = w - r;
-      v.x*= -1;
-    }
-    if(pos.y > h - r) {
-      pos.y = h - r;
-      v.y*= -1;
+    
+    //colision checking
+    if (!booty){
+      if(pos.x < r) {
+        pos.x = r;
+        v.x*= -1;
+      }
+      if(pos.y < r) {
+        pos.y = r;
+        v.y*= -1;
+      }
+      if(pos.x > w - r) {
+        pos.x = w - r;
+        v.x*= -1;
+      }
+      if(pos.y > h - r) {
+        pos.y = h - r;
+        v.y*= -1;
+      }
     }
   }
   
