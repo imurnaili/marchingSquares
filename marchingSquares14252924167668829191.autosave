@@ -1,5 +1,5 @@
-int xCount = 100;
-int yCount = 100;
+int xCount = 10;
+int yCount = 10;
 
 void setup(){
   size(400,400);
