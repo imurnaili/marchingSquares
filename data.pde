@@ -5,10 +5,12 @@ static class Ball{
   
   static int w;
   static int h;
-  static boolean booty = false;
+  static int c;
+  static boolean booty = true;
   
   static Ball[] balls;
   static void init(int wi, int he, int count){
+    c = count;
     w = wi;
     h = he;
     balls = new Ball[count];
@@ -23,6 +25,15 @@ static class Ball{
 
       balls[i] = new Ball(pos, radius, PVector.random2D().setMag(0.5));
     }
+  }
+  
+  static PVector getCenter(){
+    PVector center = new PVector(0, 0);
+    for (Ball e : balls){
+      center.add(e.pos);
+    }
+    center.mult(1.0/c);
+    return center;
   }
   
   static void updateAll(){
@@ -80,7 +91,7 @@ static class Ball{
 }
 
 
-float getValue(int x, int y) {
+float getValue(float x, float y) {
   float value = 0;
   for (Ball ball : Ball.balls){
     // r^2/(x−xi)^2+(y−yi)^2

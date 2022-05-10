@@ -1,27 +1,33 @@
-int xCount = 50;
-int yCount = 50;
+int xCount = 100;
+int yCount = 100;
+float centerX = 0;
+float centerY = 0;
 
 void setup(){
-  size(400,400);
-  Ball.init(width, height, 5);
+  size(800,800);
+  Ball.init(width, height, 3);
 }
 
-int getXCoord(int x) {
-  return x * width / xCount;
+float getXCoord(int x) {
+  return x * width / xCount + centerX;
 }
-
-int getYCoord(int y) {
-  return height-(y * height / yCount);
+float getYCoord(int y) {
+  return height-(y * height / yCount) - centerY;
 }
 
 void draw(){
+  {
+    PVector center = Ball.getCenter();
+    centerX = center.x;
+    centerY = center.y;
+  }
   background(0);
   Ball.updateAll();
   pushStyle();
   strokeWeight(3);
   for(int x = 0; x < xCount; x++) {
     for(int y = 0; y < yCount; y++) {
-      if(getValue(x * width / xCount,y * height / yCount) > 1) stroke(0, 0, 255);
+      if(getValue(get(x),y * height / yCount) > 1) stroke(0, 0, 255);
       else stroke(255, 0, 0);
       point(x * width / xCount, y * height / yCount);
     }
@@ -34,15 +40,15 @@ void draw(){
   for (int y = 0; y < yCount-1; y++) {
     for (int x = 0; x < xCount-1; x++) {
       squareindex = 0;
-      if (getValue(getXCoord(x),   getYCoord(y))   >= isoval) squareindex |= 1;
+      if (getValue(getXCoord(x), getYCoord(y))   >= isoval) squareindex |= 1;
       if (getValue(getXCoord(x+1), getYCoord(y))   >= isoval) squareindex |= 2;
       if (getValue(getXCoord(x+1), getYCoord(y+1)) >= isoval) squareindex |= 4;
-      if (getValue(getXCoord(x),   getYCoord(y+1)) >= isoval) squareindex |= 8;
+      if (getValue(getXCoord(x), getYCoord(y+1)) >= isoval) squareindex |= 8;
       //if (squareindex > 0) print(squareindex + ":");
       int[] vals = triTable[squareindex];
       for (int i = 0; i < vals.length; i += 3) {
         if (vals[i] == 0) break;
-        int[] tri = { vals[i], 0, vals[i+1], 0, vals[i+2], 0 };
+        float[] tri = { vals[i], 0, vals[i+1], 0, vals[i+2], 0 };
         for (int k = 0; k < 3; k++) {
           if (tri[k*2] == 1) {
               tri[k*2] = getXCoord(x);
