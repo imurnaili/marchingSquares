@@ -29,7 +29,7 @@ void draw(){
   }
   popStyle();
   
-  
+  beginShape();
   int squareindex;
   float isoval = 1.0;
   for (int y = 0; y < yCount-1; y++) {
@@ -83,4 +83,5 @@ void draw(){
       }
     }
   }
+  endShape();
 }
