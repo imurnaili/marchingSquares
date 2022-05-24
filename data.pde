@@ -6,11 +6,9 @@ static class Ball{
   static int w;
   static int h;
   static int c;
-  static boolean booty;
   
   static Ball[] balls;
-  static void init(int wi, int he, int count, boolean gravity){
-    booty = gravity;
+  static void init(int wi, int he, int count){
     c = count;
     w = wi;
     h = he;
@@ -28,15 +26,6 @@ static class Ball{
     }
   }
   
-  static PVector getCenter(){
-    PVector center = new PVector(0, 0);
-    for (Ball e : balls){
-      center.add(e.pos);
-    }
-    center.mult(1.0/c);
-    return center;
-  }
-  
   static void updateAll(){
    for (Ball e : balls){
      e.update();
@@ -49,43 +38,26 @@ static class Ball{
     this.v = v.copy();
   }
   
-  float getMass(){
-    return PI * pow(r, 2);
-  }
-  
-  void update(){
-    PVector a = new PVector(0,0);
-    //n booty sim
-    if (booty){
-      for(Ball b: Ball.balls){
-        float magnitude = 0.2*b.getMass()/pow(r,2);
-
-        PVector partialA = b.pos.copy().sub(pos).setMag(magnitude);
-        a.add(partialA);
-      }
-    }    
-
-    v.add(a);
+  void update(){  
     pos.add(v);
     
     //colision checking
-    if (!booty){
-      if(pos.x < r) {
-        pos.x = r;
-        v.x*= -1;
-      }
-      if(pos.y < r) {
-        pos.y = r;
-        v.y*= -1;
-      }
-      if(pos.x > w - r) {
-        pos.x = w - r;
-        v.x*= -1;
-      }
-      if(pos.y > h - r) {
-        pos.y = h - r;
-        v.y*= -1;
-      }
+   
+    if(pos.x < r) {
+      pos.x = r;
+      v.x*= -1;
+    }
+    if(pos.y < r) {
+      pos.y = r;
+      v.y*= -1;
+    }
+    if(pos.x > w - r) {
+      pos.x = w - r;
+      v.x*= -1;
+    }
+    if(pos.y > h - r) {
+      pos.y = h - r;
+      v.y*= -1;
     }
   }
   

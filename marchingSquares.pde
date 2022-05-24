@@ -1,12 +1,9 @@
 int xCount = 100;
 int yCount = 100;
-float centerX = 0;
-float centerY = 0;
-boolean gravity = false;
 
 void setup(){
   size(800,800);
-  Ball.init(width, height, 3, gravity);
+  Ball.init(width, height, 3);
 }
 
 float getXCoord(int x) {
@@ -16,32 +13,25 @@ float getYCoord(int y) {
   return height-(y * height / yCount);
 }
 
-float getCenteredXCoord(int x) {
-  return getXCoord(x) + centerX;
-}
-float getCenteredYCoord(int y) {
-  return getYCoord(y) - centerY;
-}
-
 void draw(){
-  if(gravity){
-    PVector center = Ball.getCenter();
-    centerX = center.x;
-    centerY = center.y;
-  }
+  
   background(0);
   Ball.updateAll();
+  
+  /*
   pushStyle();
   strokeWeight(3);
   for(int x = 0; x < xCount; x++) {
     for(int y = 0; y < yCount; y++) {
-      if(getValue(getCenteredXCoord(x),getCenteredYCoord(y)) > 1) stroke(0, 0, 255);
+      if(getValue(getXCoord(x),getYCoord(y)) > 1) stroke(0, 0, 255);
       else stroke(255, 0, 0);
       point(getXCoord(x), getYCoord(y));
     }
   }
   popStyle();
+  */
   
+  //this should really be done with shapes and not triangles
   stroke(#FFFFFF);
   strokeWeight(1);
   int squareindex;
@@ -49,10 +39,10 @@ void draw(){
   for (int y = 0; y < yCount-1; y++) {
     for (int x = 0; x < xCount-1; x++) {
       squareindex = 0;
-      if (getValue(getCenteredXCoord(x), getCenteredYCoord(y))   >= isoval) squareindex |= 1;
-      if (getValue(getCenteredXCoord(x+1), getCenteredYCoord(y))   >= isoval) squareindex |= 2;
-      if (getValue(getCenteredXCoord(x+1), getCenteredYCoord(y+1)) >= isoval) squareindex |= 4;
-      if (getValue(getCenteredXCoord(x), getCenteredYCoord(y+1)) >= isoval) squareindex |= 8;
+      if (getValue(getXCoord(x), getYCoord(y))   >= isoval) squareindex |= 1;
+      if (getValue(getXCoord(x+1), getYCoord(y))   >= isoval) squareindex |= 2;
+      if (getValue(getXCoord(x+1), getYCoord(y+1)) >= isoval) squareindex |= 4;
+      if (getValue(getXCoord(x), getYCoord(y+1)) >= isoval) squareindex |= 8;
       //if (squareindex > 0) print(squareindex + ":");
       int[] vals = triTable[squareindex];
       for (int i = 0; i < vals.length; i += 3) {
